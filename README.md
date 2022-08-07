@@ -1,3 +1,10 @@
+#Note
+
+To run this project you will need to generate a valid API KEY from NASA 
+website. For more information , visit: https://api.nasa.gov/
+
+After generate the api key replace the myApiNasaKey variable value.  
+
 # Purpose of this Folder
 
 This folder should contain the scaffolded project files to get a student started on their project.
