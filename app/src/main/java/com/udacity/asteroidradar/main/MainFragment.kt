@@ -2,6 +2,7 @@ package com.udacity.asteroidradar.main
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
@@ -72,10 +73,13 @@ class MainFragment : Fragment(), LifecycleOwner {
             }
         }
 
-        viewModel.showErrorScreen.observe(viewLifecycleOwner) { isErrorScreen ->
+        viewModel.showErrorMessage.observe(viewLifecycleOwner) { isErrorScreen ->
             if (isErrorScreen) {
-                binding.mainFragmentLayout.visibility = View.GONE
-                binding.errorStatusLayout.secondFragmentLayout.visibility = View.VISIBLE
+                Toast.makeText(
+                    context,
+                    getString(R.string.error_retrieving_asteroid_data),
+                    Toast.LENGTH_SHORT
+                ).show()
                 viewModel.onShowedErrorScreen()
             }
         }

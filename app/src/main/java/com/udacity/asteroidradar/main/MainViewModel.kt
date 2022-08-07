@@ -29,9 +29,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
     val showLoadingRecyclerView: LiveData<Boolean>
         get() = _showLoadingRecyclerView
 
-    private val _showErrorScreen = MutableLiveData<Boolean>()
-    val showErrorScreen: LiveData<Boolean>
-        get() = _showErrorScreen
+    private val _showErrorMessage = MutableLiveData<Boolean>()
+    val showErrorMessage: LiveData<Boolean>
+        get() = _showErrorMessage
 
     private val dataBase = AsteroidRoomDatabase.getDatabase(application)
     private val repository = AsteroidRepositoryImpl(dataBase)
@@ -51,7 +51,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
                 repository.getAsteroidList()
             } catch (e: Exception) {
                 Timber.i("Exception refreshing data initAsteroidListData: $e.message")
-                onWeekAsteroidsClicked()
+                _showErrorMessage.value = true
             }
         }
     }
@@ -63,7 +63,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
                 _showLoadingRecyclerView.value = false
             } catch (e: Exception) {
                 Timber.i("Exception refreshing data initPictureOfDay: $e.message")
-                _showErrorScreen.value = true
             }
         }
     }
@@ -78,7 +77,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
 
     fun onShowedErrorScreen() {
         _showLoadingRecyclerView.value = false
-        _showErrorScreen.value = false
+        _showErrorMessage.value = false
     }
 
     fun onWeekAsteroidsClicked() {
@@ -87,7 +86,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
                 Utils.getTodayFormatted(),
                 Utils.getSevenDaysAheadFormatted()
             ).onEmpty {
-                _showErrorScreen.value = true
+                _showErrorMessage.value = true
             }.collect { asteroids ->
                     _asteroidList.value = asteroids
                 }
@@ -104,7 +103,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
                     _asteroidList.value = asteroids
                 }
         }
-
     }
 
     fun onSavedAsteroidsClicked() {
