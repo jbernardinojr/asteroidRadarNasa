@@ -19,7 +19,6 @@
             android:id="@+id/activity_main_image_of_the_day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/image_of_the_day"
             android:adjustViewBounds="true"
             app:asteroidStatusImage="@{asteroid.potentiallyHazardous}"
             app:layout_constraintEnd_toEndOf="parent"
